@@ -49,8 +49,11 @@ public class RegisterVisitActivity extends AppCompatActivity implements View.OnC
             return;
         }else{
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                DefinirLocalizacion();
+
             }
+            locationManager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER, 2 * 20 * 1000, 10, locationListenerGPS);
+            DefinirLocalizacion();
 
         }
 
