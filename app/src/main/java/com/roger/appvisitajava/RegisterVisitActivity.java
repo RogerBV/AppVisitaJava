@@ -29,6 +29,7 @@ public class RegisterVisitActivity extends AppCompatActivity implements View.OnC
     Boolean bVistaPrevia = false;
     double nLongitud,nLatitud;
     LocationManager locationManager;
+    double longitudeGPS=0,latitudeGPS = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,8 @@ public class RegisterVisitActivity extends AppCompatActivity implements View.OnC
         btnRegistrarCliente.setOnClickListener(this);
         btnVistaPrevia = (Button)findViewById(R.id.btnVistaPrevia);
         btnVistaPrevia.setOnClickListener(this);
+        String serviceString = Context.LOCATION_SERVICE;
+        locationManager = (LocationManager)getSystemService(serviceString);
         if(!checkLocation())
         {
             return;
@@ -62,9 +65,8 @@ public class RegisterVisitActivity extends AppCompatActivity implements View.OnC
         try {
             location = locationManager.getLastKnownLocation(provider);
             updateWithNewLocation(location);
-            locationManager.requestLocationUpdates(provider,1000,1,locationListener  );
+            locationManager.requestLocationUpdates(provider,1000,1,locationListenerGPS  );
             if (location!=null){
-
 
             }else{
                 Toast.makeText(getApplicationContext(),"No se pudo recoger localizacion",Toast.LENGTH_LONG).show();
@@ -74,25 +76,28 @@ public class RegisterVisitActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    private final LocationListener locationListener = new LocationListener() {
-        @Override
+    private final LocationListener locationListenerGPS = new LocationListener() {
         public void onLocationChanged(Location location) {
-            updateWithNewLocation(location);
+            longitudeGPS = location.getLongitude();
+            latitudeGPS = location.getLatitude();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    //RegistrarCoordenadas(latitudeGPS,longitudeGPS);
+
+                }
+            });
+        }
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
         }
 
         @Override
-        public void onProviderDisabled(String provider) {
-            updateWithNewLocation(null);
+        public void onProviderEnabled(String s) {
         }
-
         @Override
-        public void onProviderEnabled(String provider) {
-
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-
+        public void onProviderDisabled(String s) {
         }
     };
 
@@ -155,6 +160,7 @@ public class RegisterVisitActivity extends AppCompatActivity implements View.OnC
             }
         }
     }
+
     private boolean VerVistaPrevia(){
         try {
             //location = locationManager.getLastKnownLocation(provider);
