@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -123,6 +124,55 @@ public class RegisterVisitActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View v) {
+        if (v.getId() == btnRegistrarCliente.getId() ){
+            if (Validar()) {
+                RegistrarLocalizacion();
+            }
 
+        }else if ( v.getId() == btnVistaPrevia.getId() ){
+            if ( VerVistaPrevia()  ){
+                Intent i = new Intent(getApplicationContext(),MapsActivity.class);
+                i.putExtra("iTipo",3);
+                i.putExtra("nLatitud",nLatitud);
+                i.putExtra("nLongitud",nLongitud);
+                startActivity(i);
+                bVistaPrevia = true;
+            }else{
+                Toast.makeText(getApplicationContext(),"No se pudo recoger localizacion",Toast.LENGTH_LONG).show();
+                bVistaPrevia = false;
+            }
+        }
+    }
+    private boolean VerVistaPrevia(){
+        /*LocationManager locationManager;
+        String serviceString = Context.LOCATION_SERVICE;
+        locationManager = (LocationManager)getSystemService(serviceString);
+        String provider = LocationManager.PASSIVE_PROVIDER;
+        Location location;*/
+        try {
+            //location = locationManager.getLastKnownLocation(provider);
+            if ((nLatitud!=0) && (nLongitud!=0) ) {
+                return true;
+            }else{
+
+                return false;
+            }
+        }catch (SecurityException e){
+            return false;
+        }
+    }
+
+    private boolean Validar(){
+        if ( txtCliente.getText().toString().trim() == ""  ){
+            Toast.makeText(getApplicationContext(),"Se debe indicar un cliente",Toast.LENGTH_LONG).show();
+            return false;
+        }else if( txtDNI.getText().toString().trim() == ""  ){
+            Toast.makeText(getApplicationContext(),"Se debe indicar el nro de DNI",Toast.LENGTH_LONG).show();
+            return false;
+        }else if(bVistaPrevia == false){
+            Toast.makeText(getApplicationContext(),"Se debe revisar la vista previa",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 }
