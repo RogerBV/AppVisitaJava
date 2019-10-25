@@ -1,14 +1,20 @@
 package com.roger.appvisitajava;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.ViewCompat;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +28,7 @@ public class RegisterVisitActivity extends AppCompatActivity implements View.OnC
     Button btnRegistrarCliente,btnVistaPrevia;
     Boolean bVistaPrevia = false;
     double nLongitud,nLatitud;
+    LocationManager locationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,12 +41,20 @@ public class RegisterVisitActivity extends AppCompatActivity implements View.OnC
         btnRegistrarCliente.setOnClickListener(this);
         btnVistaPrevia = (Button)findViewById(R.id.btnVistaPrevia);
         btnVistaPrevia.setOnClickListener(this);
-        DefinirLocalizacion();
+        if(!checkLocation())
+        {
+            return;
+        }else{
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                DefinirLocalizacion();
+            }
+
+        }
+
     }
 
     private void DefinirLocalizacion(){
         String provider = LocationManager.NETWORK_PROVIDER;
-        LocationManager locationManager;
         String serviceString = Context.LOCATION_SERVICE;
         locationManager = (LocationManager)getSystemService(serviceString);
 
@@ -92,9 +107,6 @@ public class RegisterVisitActivity extends AppCompatActivity implements View.OnC
     }
 
     private void RegistrarLocalizacion(){
-
-        Location location;
-
         try {
             //location = locationManager.getLastKnownLocation(provider);
             //locationManager.requestLocationUpdates(provider,2000,10000,locationListener);
@@ -144,11 +156,6 @@ public class RegisterVisitActivity extends AppCompatActivity implements View.OnC
         }
     }
     private boolean VerVistaPrevia(){
-        /*LocationManager locationManager;
-        String serviceString = Context.LOCATION_SERVICE;
-        locationManager = (LocationManager)getSystemService(serviceString);
-        String provider = LocationManager.PASSIVE_PROVIDER;
-        Location location;*/
         try {
             //location = locationManager.getLastKnownLocation(provider);
             if ((nLatitud!=0) && (nLongitud!=0) ) {
@@ -174,6 +181,34 @@ public class RegisterVisitActivity extends AppCompatActivity implements View.OnC
             return false;
         }
         return true;
+    }
+    private boolean isLocationEnabled() {
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+    private boolean checkLocation() {
+        if (!isLocationEnabled())
+            showAlert();
+        return isLocationEnabled();
+    }
+    private void showAlert() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Enable Location")
+                .setMessage("Su ubicación esta desactivada.\npor favor active su ubicación " +
+                        "usa esta app")
+                .setPositiveButton("Configuración de ubicación", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(myIntent);
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    }
+                });
+        dialog.show();
     }
 
 }
