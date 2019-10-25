@@ -175,4 +175,5 @@ public class RegisterVisitActivity extends AppCompatActivity implements View.OnC
         }
         return true;
     }
+
 }
