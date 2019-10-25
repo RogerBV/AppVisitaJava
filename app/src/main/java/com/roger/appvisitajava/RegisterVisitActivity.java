@@ -38,7 +38,7 @@ public class RegisterVisitActivity extends AppCompatActivity implements View.OnC
     }
 
     private void DefinirLocalizacion(){
-        String provider = LocationManager.GPS_PROVIDER;
+        String provider = LocationManager.NETWORK_PROVIDER;
         LocationManager locationManager;
         String serviceString = Context.LOCATION_SERVICE;
         locationManager = (LocationManager)getSystemService(serviceString);
@@ -55,7 +55,7 @@ public class RegisterVisitActivity extends AppCompatActivity implements View.OnC
                 Toast.makeText(getApplicationContext(),"No se pudo recoger localizacion",Toast.LENGTH_LONG).show();
             }
         }catch (SecurityException e){
-
+            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 
