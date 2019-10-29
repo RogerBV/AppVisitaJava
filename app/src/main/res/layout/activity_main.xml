@@ -14,15 +14,18 @@
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:id="@+id/imageView"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/logo_ctrujillo" />
 
         <Button
             android:textColor="#FFFFFF"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="40dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:text="Register Client"
             android:id="@+id/btnRegisterClient"
             android:background="@drawable/style_button"
@@ -31,6 +34,8 @@
         <Button
             android:textColor="#FFFFFF"
             android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="List Clients"
@@ -42,9 +47,11 @@
         <Button
             android:textColor="#FFFFFF"
             android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Positions List"
+            android:text="List Positions"
             android:id="@+id/btnPositionsList"
             android:background="@drawable/style_button"
             />
@@ -52,17 +59,8 @@
         <Button
             android:textColor="#FFFFFF"
             android:layout_marginTop="15dp"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Eliminar Cliente"
-            android:id="@+id/btnEliminar"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/style_button"
-            />
-
-        <Button
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Send Visits"
@@ -74,6 +72,8 @@
         <Button
             android:textColor="#FFFFFF"
             android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Update  Database"
