@@ -52,7 +52,7 @@ public class VisitClientDAO {
 
     public Cursor ListarVisitas(){
 
-        String sql = "SELECT  "+VisitClientTable.cDocument+" AS _id, (" + VisitClientTable.cClient + "||' DNI: '||"+VisitClientTable.cDocument+")  AS "+VisitClientTable.cClient+", " + VisitClientTable.cDocument +", "+VisitClientTable.nLatitude+", "+VisitClientTable.nLength+", ('Latitud: '||"+VisitClientTable.nLatitude+"||' Longitud: '||"+VisitClientTable.nLength+") AS Coordenadas  FROM "+VisitClientTable.TableName  ;
+        String sql = "SELECT  "+VisitClientTable.cDocument+" AS _id, (" + VisitClientTable.cClient + "||' DNI: '||"+VisitClientTable.cDocument+")  AS "+VisitClientTable.cClient+", " + VisitClientTable.cDocument +", "+VisitClientTable.nLatitude+", "+VisitClientTable.nLength+", ('Latitud: '||"+VisitClientTable.nLatitude+"||' Longitud: '||"+VisitClientTable.nLength+") AS Coordenadas, "+VisitClientTable.nLatitude+", "+VisitClientTable.nLength+"   FROM "+VisitClientTable.TableName  ;
         return db.rawQuery(sql,null);
     }
     public List<VisitClient> ListarPosiciones(){

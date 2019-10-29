@@ -36,10 +36,15 @@ public class VisitsListActivity extends AppCompatActivity implements AdapterView
         c.moveToPosition(position);
 
         String cDNI = c.getString(0);
-
+        String cCliente = c.getString(1);
+        double nLatitude = c.getDouble(3);
+        double nLength = c.getDouble(4);
         Intent i = new Intent(getApplicationContext(), MapsActivity.class );
-        i.putExtra("iTipo",1);
-        i.putExtra("cDNI" ,cDNI  );
+        i.putExtra("nTipo",1);
+        i.putExtra(VisitClientTable.cClient,cCliente);
+        i.putExtra(VisitClientTable.cDocument ,cDNI  );
+        i.putExtra(VisitClientTable.nLatitude,nLatitude);
+        i.putExtra(VisitClientTable.nLength,nLength);
         startActivity(i);
     }
 

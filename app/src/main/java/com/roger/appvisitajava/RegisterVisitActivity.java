@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.roger.Entities.VisitClient;
 import com.roger.dao.VisitClientDAO;
+import com.roger.db.VisitClientTable;
 
 public class RegisterVisitActivity extends AppCompatActivity implements View.OnClickListener {
     EditText txtCliente,txtDNI;
@@ -60,7 +61,7 @@ public class RegisterVisitActivity extends AppCompatActivity implements View.OnC
     }
 
     private void DefinirLocalizacion(){
-        String provider = LocationManager.NETWORK_PROVIDER;
+        String provider = LocationManager.GPS_PROVIDER;
         String serviceString = Context.LOCATION_SERVICE;
         locationManager = (LocationManager)getSystemService(serviceString);
 
@@ -152,9 +153,9 @@ public class RegisterVisitActivity extends AppCompatActivity implements View.OnC
         }else if ( v.getId() == btnVistaPrevia.getId() ){
             if ( VerVistaPrevia()  ){
                 Intent i = new Intent(getApplicationContext(),MapsActivity.class);
-                i.putExtra("iTipo",3);
-                i.putExtra("nLatitud",nLatitud);
-                i.putExtra("nLongitud",nLongitud);
+                i.putExtra("nTipo",3);
+                i.putExtra(VisitClientTable.nLatitude,nLatitud);
+                i.putExtra(VisitClientTable.nLength,nLongitud);
                 startActivity(i);
                 bVistaPrevia = true;
             }else{
